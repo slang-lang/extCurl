@@ -48,7 +48,7 @@ Extension::~Extension()
 
 void Extension::initialize( Slang::IScope* scope )
 {
-	std::cout << "Initialize " << mName << std::endl;
+	//std::cout << "Initialize " << mName << std::endl;
 
 	(void)scope;
 
