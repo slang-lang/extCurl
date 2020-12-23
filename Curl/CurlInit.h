@@ -46,7 +46,7 @@ public:
 				auto* request = new CurlRequest();
 				request->Handle = newHandle;
 
-				curl_easy_setopt( newHandle, CURLOPT_WRITEFUNCTION, CurlExtension::write_data );
+				curl_easy_setopt( newHandle, CURLOPT_WRITEFUNCTION, Extension::write_data );
 
 				methodResult = static_cast<int32_t>( Requests.size() );
 

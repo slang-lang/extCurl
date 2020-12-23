@@ -1,6 +1,6 @@
 
 // Header
-#include "CurlExtension.h"
+#include "Extension.h"
 
 // Library includes
 
@@ -27,8 +27,8 @@
 namespace Curl {
 
 
-CurlExtension::CurlExtension()
-: Slang::Extensions::AExtension( "Curl", "0.3.0" )
+Extension::Extension()
+: Slang::Extensions::AExtension( "Curl", "0.3.1" )
 {
 	curl_global_init( CURL_GLOBAL_ALL );
 
@@ -39,16 +39,16 @@ CurlExtension::CurlExtension()
 	Curl::init();
 }
 
-CurlExtension::~CurlExtension()
+Extension::~Extension()
 {
 	Curl::cleanup();
 
 	curl_global_cleanup();
 }
 
-void CurlExtension::initialize( Slang::IScope* scope )
+void Extension::initialize( Slang::IScope* scope )
 {
-	//std::cout << "Initialize " << mName << std::endl;
+	std::cout << "Initialize " << mName << std::endl;
 
 	(void)scope;
 
@@ -57,7 +57,7 @@ void CurlExtension::initialize( Slang::IScope* scope )
 	//scope->define( "CURLOPT_XOAUTH2_BEARER", new Slang::Runtime::IntegerObject( "CURLOPT_XOAUTH2_BEARER", CURLOPT_XOAUTH2_BEARER ) );
 }
 
-void CurlExtension::provideMethods( Slang::Extensions::ExtensionMethods& methods )
+void Extension::provideMethods( Slang::Extensions::ExtensionMethods& methods )
 {
 	assert( methods.empty() );
 
@@ -78,7 +78,7 @@ void CurlExtension::provideMethods( Slang::Extensions::ExtensionMethods& methods
 	methods.push_back( new CurlSetVerbose() );
 }
 
-size_t CurlExtension::write_data( void *contents, size_t size, size_t nmemb, void *stream )
+size_t Extension::write_data( void *contents, size_t size, size_t nmemb, void *stream )
 {
 	static_cast<std::string*>( stream )->append( (char*)contents, size * nmemb );
 
@@ -90,6 +90,6 @@ size_t CurlExtension::write_data( void *contents, size_t size, size_t nmemb, voi
 
 
 extern "C" Slang::Extensions::AExtension* factory( void ) {
-	return dynamic_cast<Slang::Extensions::AExtension*>( new Curl::CurlExtension() );
+	return dynamic_cast<Slang::Extensions::AExtension*>( new Curl::Extension() );
 }
 

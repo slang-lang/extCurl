@@ -1,6 +1,6 @@
 
-#ifndef Extensions_Curl_CurlExtension_h
-#define Extensions_Curl_CurlExtension_h
+#ifndef Curl_Extension_h
+#define Curl_Extension_h
 
 
 // Library includes
@@ -16,11 +16,11 @@
 namespace Curl {
 
 
-class CurlExtension : public Slang::Extensions::AExtension
+class Extension : public Slang::Extensions::AExtension
 {
 public:
-	CurlExtension();
-	~CurlExtension() override;
+	Extension();
+	~Extension() override;
 
 public:
 	void initialize(Slang::IScope* scope) override;

@@ -1,13 +1,12 @@
 INCLUDE(${PROJECT_SOURCE_DIR}/CMake/Base.cmake)
 
 SET(SOURCES
-    CurlExtension.cpp
+    Extension.cpp
     Types.cpp
 )
 
 SET(HEADERS
     CurlCleanup.h
-    CurlExtension.h
     CurlInit.h
     CurlPerform.h
     CurlReadResult.h
@@ -22,6 +21,7 @@ SET(HEADERS
     CurlSetUrl.h
     CurlSetUsername.h
     CurlSetVerbose.h
+    Extension.h
     Types.h
 )
 
@@ -30,8 +30,8 @@ SET(DEPENDENCIES
 )
 
 SET(MODULES
-    slang
     curl
+    slang
 )
 
 add_include(Externals)
