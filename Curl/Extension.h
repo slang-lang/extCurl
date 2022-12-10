@@ -23,8 +23,8 @@ public:
 	~Extension() override;
 
 public:
-	void initialize(Slang::IScope* scope) override;
-	void provideMethods(Slang::Extensions::ExtensionMethods &methods) override;
+	void initialize( Slang::Extensions::ExtensionNamespace* scope ) override;
+	void provideMethods( Slang::Extensions::ExtensionMethods &methods ) override;
 
 public:
 	static size_t write_data( void *contents, size_t size, size_t nmemb, void *stream );

@@ -28,7 +28,7 @@ namespace Curl {
 
 
 Extension::Extension()
-: Slang::Extensions::AExtension( "Curl", "0.3.1" )
+: Slang::Extensions::AExtension( "Curl", "0.3.2" )
 {
 	curl_global_init( CURL_GLOBAL_ALL );
 
@@ -46,7 +46,7 @@ Extension::~Extension()
 	curl_global_cleanup();
 }
 
-void Extension::initialize( Slang::IScope* scope )
+void Extension::initialize( Slang::Extensions::ExtensionNamespace* scope )
 {
 	//std::cout << "Initialize " << mName << std::endl;
 
