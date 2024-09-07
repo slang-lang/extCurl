@@ -26,6 +26,7 @@ SET(HEADERS
 )
 
 SET(DEPENDENCIES
+    CoreExtensions
     curl
 )
 
@@ -37,4 +38,3 @@ SET(MODULES
 add_include(Externals)
 
 build_shared_lib(SlangCurl "${MODULES}")
-
