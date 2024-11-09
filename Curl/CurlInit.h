@@ -6,10 +6,10 @@
 // Library include
 
 // Project includes
-#include <Core/Designtime/BuildInTypes/IntegerObject.h>
+#include <Core/Designtime/BuildInTypes/Int32Type.h>
 #include <Core/Extensions/ExtensionMethod.h>
-#include <Core/Runtime/BuildInTypes/IntegerObject.h>
-#include <Core/Runtime/BuildInTypes/StringObject.h>
+#include <Core/Runtime/BuildInTypes/Int32Type.h>
+#include <Core/Runtime/BuildInTypes/StringType.h>
 #include <Core/Tools.h>
 #include "Types.h"
 
@@ -26,7 +26,7 @@ class CurlInit: public Extensions::ExtensionMethod
 {
 public:
 	CurlInit()
-	: ExtensionMethod(0, "curl_init", Designtime::IntegerObject::TYPENAME, Mutability::Modify)
+	: ExtensionMethod(0, "curl_init", Designtime::Int32Type::TYPENAME, Mutability::Modify)
 	{
 		ParameterList params;
 
@@ -53,11 +53,11 @@ public:
 				Requests.insert( std::make_pair( Requests.size(), request ) );
 			}
 
-			*result = Runtime::IntegerObject( methodResult );
+			*result = Runtime::Int32Type( methodResult );
 		}
 		catch ( std::exception &e ) {
-			Runtime::Object *data = Controller::Instance().repository()->createInstance(Runtime::StringObject::TYPENAME, ANONYMOUS_OBJECT);
-			*data = Runtime::StringObject(std::string(e.what()));
+			Runtime::Object *data = Controller::Instance().repository()->createInstance(Runtime::StringType::TYPENAME, ANONYMOUS_OBJECT);
+			*data = Runtime::StringType(std::string(e.what()));
 
 			Controller::Instance().thread(threadId)->exception() = Runtime::ExceptionData(data, token.position());
 			return Runtime::ControlFlow::Throw;

@@ -54,7 +54,7 @@ void Extension::initialize( Slang::Extensions::ExtensionNamespace* scope )
 
 	// global vars/consts currently don't work for extensions :-(
 
-	//scope->define( "CURLOPT_XOAUTH2_BEARER", new Slang::Runtime::IntegerObject( "CURLOPT_XOAUTH2_BEARER", CURLOPT_XOAUTH2_BEARER ) );
+	//scope->define( "CURLOPT_XOAUTH2_BEARER", new Slang::Runtime::Int32Type( "CURLOPT_XOAUTH2_BEARER", CURLOPT_XOAUTH2_BEARER ) );
 }
 
 void Extension::provideMethods( Slang::Extensions::ExtensionMethods& methods )
@@ -92,4 +92,3 @@ size_t Extension::write_data( void *contents, size_t size, size_t nmemb, void *s
 extern "C" Slang::Extensions::AExtension* factory( void ) {
 	return dynamic_cast<Slang::Extensions::AExtension*>( new Curl::Extension() );
 }
-

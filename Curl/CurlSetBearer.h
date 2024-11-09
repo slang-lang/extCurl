@@ -6,11 +6,11 @@
 // Library include
 
 // Project includes
-#include <Core/Designtime/BuildInTypes/IntegerObject.h>
-#include <Core/Designtime/BuildInTypes/VoidObject.h>
+#include <Core/Designtime/BuildInTypes/Int32Type.h>
+#include <Core/Designtime/BuildInTypes/VoidType.h>
 #include <Core/Extensions/ExtensionMethod.h>
-#include <Core/Runtime/BuildInTypes/IntegerObject.h>
-#include <Core/Runtime/BuildInTypes/StringObject.h>
+#include <Core/Runtime/BuildInTypes/Int32Type.h>
+#include <Core/Runtime/BuildInTypes/StringType.h>
 #include <Core/Tools.h>
 #include "Types.h"
 
@@ -27,11 +27,11 @@ class CurlSetBearer: public Extensions::ExtensionMethod
 {
 public:
 	CurlSetBearer()
-	: ExtensionMethod(0, "curl_set_bearer", Designtime::VoidObject::TYPENAME, Mutability::Modify)
+	: ExtensionMethod(0, "curl_set_bearer", Designtime::VoidType::TYPENAME, Mutability::Modify)
 	{
 		ParameterList params;
-		params.push_back(Parameter::CreateDesigntime("handle", Designtime::IntegerObject::TYPENAME));
-		params.push_back(Parameter::CreateDesigntime("bearer", Designtime::StringObject::TYPENAME));
+		params.push_back(Parameter::CreateDesigntime("handle", Designtime::Int32Type::TYPENAME));
+		params.push_back(Parameter::CreateDesigntime("bearer", Designtime::StringType::TYPENAME));
 
 		setSignature(params);
 	}
@@ -56,8 +56,8 @@ public:
 			}
 		}
 		catch ( std::exception &e ) {
-			Runtime::Object *data = Controller::Instance().repository()->createInstance(Runtime::StringObject::TYPENAME, ANONYMOUS_OBJECT);
-			*data = Runtime::StringObject(std::string(e.what()));
+			Runtime::Object *data = Controller::Instance().repository()->createInstance(Runtime::StringType::TYPENAME, ANONYMOUS_OBJECT);
+			*data = Runtime::StringType(std::string(e.what()));
 
 			Controller::Instance().thread(threadId)->exception() = Runtime::ExceptionData(data, token.position());
 			return Runtime::ControlFlow::Throw;
