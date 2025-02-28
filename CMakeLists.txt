@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 
 PROJECT(extCurl)
 
@@ -11,4 +11,3 @@ PROJECT(extCurl)
 INCLUDE(CMake/Base.cmake)
 
 ADD_SUBDIRECTORY(Curl)
-
