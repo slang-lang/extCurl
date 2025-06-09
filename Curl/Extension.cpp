@@ -28,13 +28,13 @@ namespace Curl {
 
 
 Extension::Extension()
-: Slang::Extensions::AExtension( "extCurl", "0.3.3" )
+: Slang::Extensions::AExtension( "extCurl", "0.3.4" )
 {
 	curl_global_init( CURL_GLOBAL_ALL );
 
 	// initialize name & version
 	auto* curl = curl_version_info( CURLVERSION_NOW );
-	mName      = "Curl (using libCurl " + std::string( curl->version ) + ")";
+	mName      = "extCurl (using libCurl " + std::string( curl->version ) + ")";
 
 	Curl::init();
 }
