@@ -10,4 +10,4 @@ PROJECT(extCurl)
 
 INCLUDE(CMake/Base.cmake)
 
-ADD_SUBDIRECTORY(Curl)
+ADD_SUBDIRECTORY(Extension)
