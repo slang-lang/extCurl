@@ -37,29 +37,20 @@ public:
 		setSignature(params);
 	}
 
-	Runtime::ControlFlow::E execute(Common::ThreadId threadId, const ParameterList& params, Runtime::Object* /*result*/, const Token& token)
+	Runtime::ControlFlow::E execute( const ParameterList& params, Runtime::Object* /*result*/ )
 	{
-		try {
-			auto it = params.cbegin();
-			auto paramHandle = (*it++).value().toInt();
-			auto paramData = (*it++).value().toStdString();
+		auto it = params.cbegin();
+		auto paramHandle = (*it++).value().toInt();
+		auto paramData = (*it++).value().toStdString();
 
-			if ( paramHandle > 0 && paramHandle < static_cast<int32_t>( Requests.size() ) ) {
-				auto& request = Requests[paramHandle];
+		if ( paramHandle > 0 && paramHandle < static_cast<int32_t>( Requests.size() ) ) {
+			auto& request = Requests[paramHandle];
 
-				curl_easy_setopt( request->Handle, CURLOPT_POST, 1L );
-				// size of the data to copy from the buffer and send in the request
-				curl_easy_setopt( request->Handle, CURLOPT_POSTFIELDSIZE, static_cast<long>( paramData.size() ) );
-				// send data from the local stack
-				curl_easy_setopt( request->Handle, CURLOPT_COPYPOSTFIELDS, paramData.c_str() );
-			}
-		}
-		catch ( std::exception &e ) {
-			Runtime::Object *data = Controller::Instance().repository()->createInstance(Runtime::StringType::TYPENAME, ANONYMOUS_OBJECT);
-			*data = Runtime::StringType(std::string(e.what()));
-
-			Controller::Instance().thread(threadId)->exception() = Runtime::ExceptionData(data, token.position());
-			return Runtime::ControlFlow::Throw;
+			curl_easy_setopt( request->Handle, CURLOPT_POST, 1L );
+			// size of the data to copy from the buffer and send in the request
+			curl_easy_setopt( request->Handle, CURLOPT_POSTFIELDSIZE, static_cast<long>( paramData.size() ) );
+			// send data from the local stack
+			curl_easy_setopt( request->Handle, CURLOPT_COPYPOSTFIELDS, paramData.c_str() );
 		}
 
 		return Runtime::ControlFlow::Normal;

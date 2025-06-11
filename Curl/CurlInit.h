@@ -34,34 +34,25 @@ public:
 	}
 
 
-	Runtime::ControlFlow::E execute(Common::ThreadId threadId, const ParameterList& /*params*/, Runtime::Object* result, const Token& token)
+	Runtime::ControlFlow::E execute( const ParameterList& /*params*/, Runtime::Object* result )
 	{
-		try {
-			// duplicate base handle, since we want to inherit all of its already set options
-			//CURL* newHandle = curl_easy_duphandle( Requests[0].Handle );
-			auto* newHandle = curl_easy_init();
+		// duplicate base handle, since we want to inherit all of its already set options
+		//CURL* newHandle = curl_easy_duphandle( Requests[0].Handle );
+		auto* newHandle = curl_easy_init();
 
-			int32_t methodResult = 0;
-			if ( newHandle ) {
-				auto* request = new CurlRequest();
-				request->Handle = newHandle;
+		int32_t methodResult = 0;
+		if ( newHandle ) {
+			auto* request = new CurlRequest();
+			request->Handle = newHandle;
 
-				curl_easy_setopt( newHandle, CURLOPT_WRITEFUNCTION, Extension::write_data );
+			curl_easy_setopt( newHandle, CURLOPT_WRITEFUNCTION, Extension::write_data );
 
-				methodResult = static_cast<int32_t>( Requests.size() );
+			methodResult = static_cast<int32_t>( Requests.size() );
 
-				Requests.insert( std::make_pair( Requests.size(), request ) );
-			}
-
-			*result = Runtime::Int32Type( methodResult );
+			Requests.insert( std::make_pair( Requests.size(), request ) );
 		}
-		catch ( std::exception &e ) {
-			Runtime::Object *data = Controller::Instance().repository()->createInstance(Runtime::StringType::TYPENAME, ANONYMOUS_OBJECT);
-			*data = Runtime::StringType(std::string(e.what()));
 
-			Controller::Instance().thread(threadId)->exception() = Runtime::ExceptionData(data, token.position());
-			return Runtime::ControlFlow::Throw;
-		}
+		*result = Runtime::Int32Type( methodResult );
 
 		return Runtime::ControlFlow::Normal;
 	}

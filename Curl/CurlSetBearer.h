@@ -37,30 +37,21 @@ public:
 	}
 
 
-	Runtime::ControlFlow::E execute(Common::ThreadId threadId, const ParameterList& params, Runtime::Object* /*result*/, const Token& token)
+	Runtime::ControlFlow::E execute( const ParameterList& params, Runtime::Object* /*result*/ )
 	{
-		try {
-			auto it = params.cbegin();
-			auto paramHandle = (*it++).value().toInt();
-			auto paramBearer = (*it++).value().toStdString();
+		auto it = params.cbegin();
+		auto paramHandle = (*it++).value().toInt();
+		auto paramBearer = (*it++).value().toStdString();
 
-			if ( paramHandle > 0 && paramHandle < static_cast<int32_t>( Requests.size() ) ) {
-				auto& request = Requests[paramHandle];
+		if ( paramHandle > 0 && paramHandle < static_cast<int32_t>( Requests.size() ) ) {
+			auto& request = Requests[paramHandle];
 
-				curl_easy_setopt( request->Handle, CURLOPT_XOAUTH2_BEARER, paramBearer.c_str() );
+			curl_easy_setopt( request->Handle, CURLOPT_XOAUTH2_BEARER, paramBearer.c_str() );
 #ifdef CURLAUTH_BEARER
-				curl_easy_setopt( request->Handle, CURLOPT_HTTPAUTH, CURLAUTH_BEARER );
+			curl_easy_setopt( request->Handle, CURLOPT_HTTPAUTH, CURLAUTH_BEARER );
 #else
-				curl_easy_setopt( request->Handle, CURLOPT_HTTPAUTH, CURLAUTH_ANY );
+			curl_easy_setopt( request->Handle, CURLOPT_HTTPAUTH, CURLAUTH_ANY );
 #endif
-			}
-		}
-		catch ( std::exception &e ) {
-			Runtime::Object *data = Controller::Instance().repository()->createInstance(Runtime::StringType::TYPENAME, ANONYMOUS_OBJECT);
-			*data = Runtime::StringType(std::string(e.what()));
-
-			Controller::Instance().thread(threadId)->exception() = Runtime::ExceptionData(data, token.position());
-			return Runtime::ControlFlow::Throw;
 		}
 
 		return Runtime::ControlFlow::Normal;
