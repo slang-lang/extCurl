@@ -37,25 +37,16 @@ public:
 		setSignature(params);
 	}
 
-	Runtime::ControlFlow::E execute(Common::ThreadId threadId, const ParameterList& params, Runtime::Object* /*result*/, const Token& token)
+	Runtime::ControlFlow::E execute( const ParameterList& params, Runtime::Object* /*result*/ )
 	{
-		try {
-			auto it = params.cbegin();
-			auto paramHandle = (*it++).value().toInt();
-			auto paramHeader = (*it++).value().toStdString();
+		auto it = params.cbegin();
+		auto paramHandle = (*it++).value().toInt();
+		auto paramHeader = (*it++).value().toStdString();
 
-			if ( paramHandle > 0 && paramHandle < static_cast<int32_t>( Requests.size() ) ) {
-				auto& request = Requests[paramHandle];
+		if ( paramHandle > 0 && paramHandle < static_cast<int32_t>( Requests.size() ) ) {
+			auto& request = Requests[paramHandle];
 
-				request->HeaderList = curl_slist_append( request->HeaderList, paramHeader.c_str() );
-			}
-		}
-		catch ( std::exception &e ) {
-			Runtime::Object *data = Controller::Instance().repository()->createInstance(Runtime::StringType::TYPENAME, ANONYMOUS_OBJECT);
-			*data = Runtime::StringType(std::string(e.what()));
-
-			Controller::Instance().thread(threadId)->exception() = Runtime::ExceptionData(data, token.position());
-			return Runtime::ControlFlow::Throw;
+			request->HeaderList = curl_slist_append( request->HeaderList, paramHeader.c_str() );
 		}
 
 		return Runtime::ControlFlow::Normal;

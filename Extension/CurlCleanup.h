@@ -36,27 +36,18 @@ public:
 	}
 
 
-	Runtime::ControlFlow::E execute(Common::ThreadId threadId, const ParameterList& params, Runtime::Object* /*result*/, const Token& token)
+	Runtime::ControlFlow::E execute( const ParameterList& params, Runtime::Object* /*result*/ )
 	{
-		try {
-			auto it = params.cbegin();
-			auto paramHandle = (*it++).value().toInt();
+		auto it = params.cbegin();
+		auto paramHandle = (*it++).value().toInt();
 
-			if ( paramHandle > 0 && paramHandle < static_cast<int>( Requests.size() ) ) {
-				auto& request = Requests[paramHandle];
+		if ( paramHandle > 0 && paramHandle < static_cast<int>( Requests.size() ) ) {
+			auto& request = Requests[paramHandle];
 
-				curl_easy_cleanup( request->Handle );
+			curl_easy_cleanup( request->Handle );
 
-				request->Handle = nullptr;
-				request->Result.clear();
-			}
-		}
-		catch ( std::exception &e ) {
-			Runtime::Object *data = Controller::Instance().repository()->createInstance(Runtime::StringType::TYPENAME, ANONYMOUS_OBJECT);
-			*data = Runtime::StringType(std::string(e.what()));
-
-			Controller::Instance().thread(threadId)->exception() = Runtime::ExceptionData(data, token.position());
-			return Runtime::ControlFlow::Throw;
+			request->Handle = nullptr;
+			request->Result.clear();
 		}
 
 		return Runtime::ControlFlow::Normal;
