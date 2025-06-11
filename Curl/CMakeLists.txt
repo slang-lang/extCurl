@@ -26,7 +26,7 @@ SET(HEADERS
 )
 
 SET(DEPENDENCIES
-    CoreExtensions
+    Core
     curl
 )
 
