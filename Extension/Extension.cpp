@@ -28,7 +28,7 @@ namespace Curl {
 
 
 Extension::Extension()
-: Slang::Extensions::AExtension( "extCurl", "0.3.4" )
+: Slang::Extensions::AExtension( "extCurl", "0.4.0" )
 {
 	curl_global_init( CURL_GLOBAL_ALL );
 
@@ -48,8 +48,6 @@ Extension::~Extension()
 
 void Extension::initialize( Slang::Extensions::ExtensionNamespace* scope )
 {
-	//std::cout << "Initialize " << mName << std::endl;
-
 	(void)scope;
 
 	// global vars/consts currently don't work for extensions :-(
