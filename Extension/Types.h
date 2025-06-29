@@ -11,7 +11,6 @@
 // Project includes
 #include <Core/Common/Exceptions.h>
 #include <Core/Extensions/ExtensionMethod.h>
-#include <Core/VirtualMachine/Controller.h>
 
 // Forward declarations
 
