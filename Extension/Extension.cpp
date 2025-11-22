@@ -79,7 +79,7 @@ void Extension::provideMethods( Slang::Extensions::ExtensionMethods& methods )
 
 size_t Extension::write_data( void *contents, size_t size, size_t nmemb, void *stream )
 {
-	static_cast<std::string*>( stream )->append( (char*)contents, size * nmemb );
+	static_cast<std::string*>( stream )->append( static_cast<char*>( contents ), size * nmemb );
 
 	return size * nmemb;
 }
