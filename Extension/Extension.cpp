@@ -29,7 +29,7 @@ namespace Curl {
 
 
 Extension::Extension()
-: Slang::Extensions::AExtension( "extCurl", "0.4.0" )
+: Slang::Extensions::AExtension( "extCurl", "0.4.1" )
 {
 	curl_global_init( CURL_GLOBAL_ALL );
 

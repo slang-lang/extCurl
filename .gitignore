@@ -10,5 +10,4 @@ Bundle/debian/debhelper-build-stamp
 Bundle/debian/files
 Bundle/debian/slang-curl/
 Bundle/debian/slang-curl.substvars
-CMake/Dependencies.cmake
 
