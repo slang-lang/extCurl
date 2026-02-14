@@ -4,7 +4,7 @@ public void Main( int argc, string args ) modify {
 	var handle = curl_init();
 	//print( "Handle: " + handle );
 
-	curl_set_url( handle, "https://api.exchange.bitpanda.com/public/v1/account/orders" );
+	curl_set_url( handle, "https://api.cryptofox.at/v1/time/" );
 	//curl_set_password( handle, "" );
 	curl_set_progress( handle, false );
 	//curl_set_username( handle, "" );

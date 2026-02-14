@@ -35,7 +35,6 @@ public:
 		setSignature(params);
 	}
 
-
 	Runtime::ControlFlow::E execute( const ParameterList& params, Runtime::Object* /*result*/ )
 	{
 		auto it = params.cbegin();

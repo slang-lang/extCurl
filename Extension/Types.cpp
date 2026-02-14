@@ -18,7 +18,9 @@ CurlRequests Requests;
 void cleanup()
 {
 	for ( auto it = Requests.begin(); it != Requests.end(); ++it ) {
-		delete it->second;
+		if ( it->second != nullptr ) {
+			delete it->second;
+		}
 	}
 }
 
@@ -30,4 +32,3 @@ void init()
 
 
 }
-
